@@ -2,7 +2,7 @@
 const countdown = document.getElementById("countdown");
 const messageBox = document.getElementById("daily-message");
 
-const birthday = new Date("May 4, 2025 00:00:00").getTime();
+const birthday = new Date("May 4, 2026 00:00:00").getTime();
 
 function updateCountdown() {
     const now = new Date().getTime();
