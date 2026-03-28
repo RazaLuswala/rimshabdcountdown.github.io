@@ -1,25 +1,60 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rimsha's Birthday Countdown</title>
-    <link rel="stylesheet" href="style.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Rimsha's Birthday Countdown 👑</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Rimsha's Birthday Countdown</h1>
-        <div id="countdown"></div>
-        <p class="tagline">Counting down to something beautiful... 🌸</p>
-        <div class="image-section">
-            <img src="assets/niqab2.jpg" alt="Rimsha's Image" class="rimsha-image">
-        </div>
-        <div class="message-section">
-            <button onclick="revealMessage()">See Today’s Message</button>
-            <p id="daily-message"></p>
-        </div>
-    </div>
-    <script src="script.js"></script>
+
+<div class="bg-layer"></div>
+<canvas id="stars"></canvas>
+<canvas id="confetti" style="display:none"></canvas>
+
+<div class="page">
+  <div class="header">
+    <span class="crown-icon">👑</span>
+    <div class="main-title">For Someone Special</div>
+    <div class="main-sub">May 4, 2026 &nbsp;·&nbsp; Rimsha's Day</div>
+  </div>
+
+  <div class="countdown-wrap">
+    <div class="cd-unit"><div class="cd-num" id="cd-d">--</div><div class="cd-label">Days</div></div>
+    <div class="cd-sep"><span></span><span></span></div>
+    <div class="cd-unit"><div class="cd-num" id="cd-h">--</div><div class="cd-label">Hours</div></div>
+    <div class="cd-sep"><span></span><span></span></div>
+    <div class="cd-unit"><div class="cd-num" id="cd-m">--</div><div class="cd-label">Minutes</div></div>
+    <div class="cd-sep"><span></span><span></span></div>
+    <div class="cd-unit"><div class="cd-num" id="cd-s">--</div><div class="cd-label">Seconds</div></div>
+  </div>
+
+  <div class="ornament">
+    <div class="ornament-line"></div>
+    <div class="ornament-dot"></div>
+    <div class="ornament-line"></div>
+  </div>
+
+  <div class="msg-card">
+    <div class="msg-date" id="msgDate">Today</div>
+    <span class="msg-icon" id="msgIcon">🌸</span>
+    <div class="msg-body" id="msgBody">Loading...</div>
+  </div>
+
+  <div class="footer">A little something for every day leading up to the big day ✨</div>
+</div>
+
+<!-- Birthday overlay -->
+<div class="bday-overlay" id="bdayOverlay">
+  <div class="bday-emoji-row">🎂 🌸 🎉</div>
+  <div class="bday-title">Happy Birthday</div>
+  <div class="bday-name">Rimsha 👑</div>
+  <div class="bday-msg" id="bdayMsg"></div>
+  <button class="bday-close" onclick="document.getElementById('bdayOverlay').classList.remove('show')">Close with love ✕</button>
+</div>
+
+<script src="script.js"></script>
 </body>
 </html>
