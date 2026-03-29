@@ -361,3 +361,81 @@ canvas#confetti {
   pointer-events: none;
 }
 
+/* ── Crescent Moon ── */
+.moon {
+  position: fixed;
+  top: clamp(10px, 3vw, 36px);
+  left: clamp(12px, 3vw, 42px);
+  z-index: 5;
+  pointer-events: none;
+  width: clamp(130px, 16vw, 190px);
+  height: auto;
+  mix-blend-mode: screen;
+  animation: moonDrift 7s ease-in-out infinite;
+}
+@keyframes moonDrift {
+  0%,100% { transform: translateY(0px);   filter: drop-shadow(0 0 22px rgba(180,165,120,0.5)) brightness(0.92); }
+  50%      { transform: translateY(-10px); filter: drop-shadow(0 0 38px rgba(180,165,120,0.75)) brightness(1.0); }
+}
+
+/* ── Girl image ── */
+.girl-wrap {
+  position: relative;
+  width: clamp(140px, 35vw, 200px);
+  height: clamp(140px, 35vw, 200px);
+  margin-bottom: 1.6rem;
+  animation: fadeUp 1s 0.1s ease both;
+  opacity: 0;
+}
+.girl-ring {
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid rgba(212,175,122,0.4);
+  animation: ringPulse 3s ease-in-out infinite;
+}
+.girl-ring-2 {
+  position: absolute;
+  inset: -8px;
+  border-radius: 50%;
+  border: 1px solid rgba(232,164,184,0.2);
+  animation: ringPulse 3s 1s ease-in-out infinite;
+}
+@keyframes ringPulse {
+  0%,100% { opacity: 0.6; transform: scale(1); }
+  50%      { opacity: 1; transform: scale(1.03); }
+}
+.girl-img {
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+  object-position: top center;
+  mix-blend-mode: luminosity;
+  filter: brightness(0.9) saturate(0.7) contrast(1.05);
+  transition: filter 0.4s;
+}
+.girl-img:hover {
+  filter: brightness(1) saturate(1) contrast(1.05);
+  mix-blend-mode: normal;
+}
+.girl-glow {
+  position: absolute; inset: 0;
+  border-radius: 50%;
+  background: radial-gradient(circle at 50% 50%, rgba(212,175,122,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* ── Cute countdown font override ── */
+.cd-num {
+  font-family: 'Playfair Display', serif !important;
+  font-weight: 400 !important;
+  font-size: clamp(2rem, 7vw, 3rem) !important;
+  letter-spacing: 0.02em !important;
+}
+
+/* ── Darker message text ── */
+.msg-body {
+  color: #fce8f0 !important;
+  font-weight: 400 !important;
+}
+
