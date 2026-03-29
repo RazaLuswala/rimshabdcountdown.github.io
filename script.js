@@ -181,3 +181,4 @@ function startConfetti() {
 
 // ─── Init ────────────────────────────────────────────────
 revealMessage();
+
