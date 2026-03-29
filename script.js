@@ -93,29 +93,130 @@ tick();
 (function() {
   const c = document.getElementById('stars');
   const ctx = c.getContext('2d');
-  let stars = [];
+  let stars = [], sparkles = [], shooters = [];
+
   function resize() {
     c.width = window.innerWidth;
     c.height = window.innerHeight;
-    stars = Array.from({length: 160}, () => ({
+
+    // Regular stars — more of them, 3 size tiers
+    stars = Array.from({length: 280}, () => ({
       x: Math.random() * c.width,
       y: Math.random() * c.height,
-      r: Math.random() * 1.3 + 0.2,
+      r: Math.random() < 0.15 ? (Math.random() * 1.2 + 1.2)   // large
+       : Math.random() < 0.4  ? (Math.random() * 0.7 + 0.7)   // medium
+       : (Math.random() * 0.4 + 0.15),                          // tiny
       phase: Math.random() * Math.PI * 2,
-      speed: 0.003 + Math.random() * 0.006
+      speed: 0.002 + Math.random() * 0.007,
+      color: Math.random() < 0.15 ? '255,220,180'              // warm gold
+           : Math.random() < 0.1  ? '180,210,255'              // cool blue
+           : '245,218,235'                                       // default pink-white
+    }));
+
+    // Sparkle/glitter stars — 4-pointed cross shape
+    sparkles = Array.from({length: 18}, () => ({
+      x: Math.random() * c.width,
+      y: Math.random() * c.height,
+      size: Math.random() * 4 + 3,
+      phase: Math.random() * Math.PI * 2,
+      speed: 0.004 + Math.random() * 0.006
     }));
   }
+
+  // Spawn a shooting star occasionally
+  function spawnShooter() {
+    shooters.push({
+      x: Math.random() * c.width * 0.8,
+      y: Math.random() * c.height * 0.4,
+      len: 80 + Math.random() * 80,
+      speed: 6 + Math.random() * 5,
+      angle: Math.PI / 5 + Math.random() * 0.3,
+      alpha: 1,
+      progress: 0
+    });
+  }
+  setInterval(() => { if (Math.random() < 0.55) spawnShooter(); }, 2800);
+
+  function drawSparkle(ctx, x, y, size, alpha) {
+    ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.strokeStyle = `rgba(255,230,170,${alpha})`;
+    ctx.lineWidth = 0.8;
+    // 4-point star cross
+    ctx.beginPath();
+    ctx.moveTo(x - size, y); ctx.lineTo(x + size, y);
+    ctx.moveTo(x, y - size); ctx.lineTo(x, y + size);
+    // Diagonal thinner arms
+    const d = size * 0.5;
+    ctx.moveTo(x - d, y - d); ctx.lineTo(x + d, y + d);
+    ctx.moveTo(x + d, y - d); ctx.lineTo(x - d, y + d);
+    ctx.stroke();
+    // Centre dot
+    ctx.beginPath(); ctx.arc(x, y, size * 0.18, 0, Math.PI*2);
+    ctx.fillStyle = `rgba(255,248,210,${alpha})`;
+    ctx.fill();
+    ctx.restore();
+  }
+
   function draw(t) {
     ctx.clearRect(0, 0, c.width, c.height);
+
+    // Nebula soft glow patches
+    const nebulae = [
+      { x: c.width*0.72, y: c.height*0.18, r: c.width*0.22, c1:'rgba(120,60,160,0.055)', c2:'rgba(180,80,140,0.02)' },
+      { x: c.width*0.25, y: c.height*0.65, r: c.width*0.18, c1:'rgba(60,40,140,0.05)',  c2:'rgba(100,60,160,0.015)' },
+      { x: c.width*0.55, y: c.height*0.45, r: c.width*0.28, c1:'rgba(90,30,120,0.04)',  c2:'rgba(140,70,100,0.01)' }
+    ];
+    nebulae.forEach(n => {
+      const g = ctx.createRadialGradient(n.x, n.y, 0, n.x, n.y, n.r);
+      g.addColorStop(0, n.c1); g.addColorStop(1, n.c2);
+      ctx.beginPath(); ctx.arc(n.x, n.y, n.r, 0, Math.PI*2);
+      ctx.fillStyle = g; ctx.fill();
+    });
+
+    // Regular stars
     stars.forEach(s => {
-      const a = 0.25 + 0.55 * Math.sin(s.phase + t * s.speed);
+      const a = 0.2 + 0.7 * Math.sin(s.phase + t * s.speed);
       ctx.beginPath();
       ctx.arc(s.x, s.y, s.r, 0, Math.PI * 2);
-      ctx.fillStyle = `rgba(245,218,235,${a})`;
+      ctx.fillStyle = `rgba(${s.color},${a})`;
       ctx.fill();
     });
+
+    // Sparkle stars
+    sparkles.forEach(s => {
+      const a = 0.15 + 0.75 * Math.abs(Math.sin(s.phase + t * s.speed));
+      drawSparkle(ctx, s.x, s.y, s.size, a);
+    });
+
+    // Shooting stars
+    for (let i = shooters.length - 1; i >= 0; i--) {
+      const s = shooters[i];
+      s.progress += s.speed;
+      const px = s.x + Math.cos(s.angle) * s.progress;
+      const py = s.y + Math.sin(s.angle) * s.progress;
+      const tailX = px - Math.cos(s.angle) * s.len;
+      const tailY = py - Math.sin(s.angle) * s.len;
+      s.alpha = Math.max(0, 1 - s.progress / (s.len * 2.5));
+      if (s.alpha <= 0 || px > c.width + 50 || py > c.height + 50) {
+        shooters.splice(i, 1); continue;
+      }
+      const grad = ctx.createLinearGradient(tailX, tailY, px, py);
+      grad.addColorStop(0, `rgba(255,248,220,0)`);
+      grad.addColorStop(0.6, `rgba(255,240,180,${s.alpha * 0.5})`);
+      grad.addColorStop(1, `rgba(255,255,240,${s.alpha})`);
+      ctx.beginPath();
+      ctx.moveTo(tailX, tailY); ctx.lineTo(px, py);
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = 1.4; ctx.stroke();
+      // Head glow
+      ctx.beginPath(); ctx.arc(px, py, 1.5, 0, Math.PI*2);
+      ctx.fillStyle = `rgba(255,255,220,${s.alpha})`; ctx.fill();
+    }
+
     requestAnimationFrame(draw);
   }
+
   window.addEventListener('resize', resize);
   resize();
   requestAnimationFrame(draw);
@@ -181,4 +282,5 @@ function startConfetti() {
 
 // ─── Init ────────────────────────────────────────────────
 revealMessage();
+
 
