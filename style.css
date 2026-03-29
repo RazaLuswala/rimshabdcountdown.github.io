@@ -102,11 +102,11 @@ canvas#stars {
 .main-sub {
   margin-top: 0.5rem;
   font-size: 0.78rem;
-  font-weight: 300;
+  font-weight: 400;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: var(--gold);
-  opacity: 0.8;
+  color: #d4af7a;
+  opacity: 1;
 }
 
 /* ── Countdown ── */
@@ -190,12 +190,12 @@ canvas#stars {
 .ornament-line {
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(212,175,122,0.35), transparent);
+  background: linear-gradient(90deg, transparent, rgba(212,175,122,0.65), transparent);
 }
 .ornament-dot {
   width: 6px; height: 6px; border-radius: 50%;
   background: var(--gold);
-  opacity: 0.5;
+  opacity: 0.85;
 }
 
 /* ── Message card ── */
@@ -227,7 +227,7 @@ canvas#stars {
   font-size: 0.68rem;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: rgba(212,175,122,0.6);
+  color: rgba(212,175,122,0.9);
   margin-bottom: 0.9rem;
 }
 
@@ -262,7 +262,7 @@ canvas#stars {
   margin-top: 2rem;
   font-size: 0.7rem;
   letter-spacing: 0.1em;
-  color: rgba(212,175,122,0.3);
+  color: rgba(212,175,122,0.65);
   text-align: center;
   animation: fadeUp 1s 0.7s ease both;
   opacity: 0;
