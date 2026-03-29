@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Rimsha's Birthday Countdown 👑</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="style.css">
 </head>
 <body>
@@ -14,11 +14,22 @@
 <canvas id="stars"></canvas>
 <canvas id="confetti" style="display:none"></canvas>
 
+<!-- Real moon photo -->
+<img class="moon" id="moonImg" src="moon.png" alt="Waning crescent moon" />
+
 <div class="page">
   <div class="header">
     <span class="crown-icon">👑</span>
     <div class="main-title">For Someone Special</div>
     <div class="main-sub">May 4, 2026 &nbsp;·&nbsp; Rimsha's Day</div>
+  </div>
+
+  <!-- Girl image -->
+  <div class="girl-wrap">
+    <div class="girl-ring-2"></div>
+    <div class="girl-ring"></div>
+    <img class="girl-img" src="girl.jpg" alt="Rimsha" />
+    <div class="girl-glow"></div>
   </div>
 
   <div class="countdown-wrap">
@@ -56,5 +67,6 @@
 </div>
 
 <script src="script.js"></script>
+
 </body>
 </html>
