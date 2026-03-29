@@ -190,12 +190,12 @@ canvas#stars {
 .ornament-line {
   flex: 1;
   height: 1px;
-  background: linear-gradient(90deg, transparent, rgba(212,175,122,0.65), transparent);
+  background: linear-gradient(95deg, transparent, rgba(212,175,122,0.65), transparent);
 }
 .ornament-dot {
   width: 6px; height: 6px; border-radius: 50%;
   background: var(--gold);
-  opacity: 0.85;
+  opacity: 0.90;
 }
 
 /* ── Message card ── */
